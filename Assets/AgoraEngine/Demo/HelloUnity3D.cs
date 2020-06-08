@@ -7,14 +7,14 @@ using agora_gaming_rtc;
 
 public class HelloUnity3D : MonoBehaviour
 {
-    public Text hit;
-    public GameObject TestObject;
-    public InputField mChannelNameInputField;
-    public Text mShownMessage;
+    //public Text hit;
+    //public GameObject TestObject;
+    //public InputField mChannelNameInputField;
+    //public Text mShownMessage;
     //public Text versionText;
-    public Button joinChannel;
-    public Button leaveChannel;
-    public Button muteButton;
+    //public Button joinChannel;
+    //public Button leaveChannel;
+   // public Button muteButton;
 
     private IRtcEngine mRtcEngine = null;
 
@@ -28,10 +28,10 @@ public class HelloUnity3D : MonoBehaviour
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 30;
-        muteButton.gameObject.SetActive(false);
-        leaveChannel.gameObject.SetActive(false);
-        TestObject.SetActive(false);
-        hit.gameObject.SetActive(false);
+        //muteButton.gameObject.SetActive(false);
+        //leaveChannel.gameObject.SetActive(false);
+        //TestObject.SetActive(false);
+        //        h//it.gameObject.SetActive(false);
     }
 
     // Use this for initialization
@@ -47,40 +47,40 @@ public class HelloUnity3D : MonoBehaviour
 				Permission.RequestUserPermission(Permission.Microphone);
 			}
 #endif
-        joinChannel.onClick.AddListener(JoinChannel);
-        leaveChannel.onClick.AddListener(LeaveChannel);
-        muteButton.onClick.AddListener(MuteButtonTapped);
+        //joinChannel.onClick.AddListener(JoinChannel);
+       // leaveChannel.onClick.AddListener(LeaveChannel);
+       // muteButton.onClick.AddListener(MuteButtonTapped);
 
         mRtcEngine = IRtcEngine.GetEngine(appId);
         //versionText.GetComponent<Text>().text = "Version : " + getSdkVersion();
-
+        JoinChannel();
         mRtcEngine.OnJoinChannelSuccess += (string channelName, uint uid, int elapsed) =>
         {
             
-            mShownMessage.text = "Entered Room";
-            muteButton.gameObject.SetActive(true);
-            leaveChannel.gameObject.SetActive(true);  
-            joinChannel.gameObject.SetActive(false);
-            mChannelNameInputField.gameObject.SetActive(false);
-            TestObject.SetActive(true);
-            hit.gameObject.SetActive(true);
+          //  mShownMessage.text = "Entered Room";
+           // muteButton.gameObject.SetActive(true);
+          //  leaveChannel.gameObject.SetActive(true);  
+           // joinChannel.gameObject.SetActive(false);
+           // mChannelNameInputField.gameObject.SetActive(false);
+           // TestObject.SetActive(true);
+            //hit.gameObject.SetActive(true);
         };
 
         mRtcEngine.OnLeaveChannel += (RtcStats stats) =>
         {
             
-            mShownMessage.text = "Leaved Room";
-            muteButton.gameObject.SetActive(false) ;
-            leaveChannel.gameObject.SetActive(false);  
-            joinChannel.gameObject.SetActive(true);
-            mChannelNameInputField.gameObject.SetActive(true);
-            TestObject.SetActive(false);
-            hit.gameObject.SetActive(false);
+           // mShownMessage.text = "Leaved Room";
+           // muteButton.gameObject.SetActive(false) ;
+           // leaveChannel.gameObject.SetActive(false);  
+           // joinChannel.gameObject.SetActive(true);
+           // mChannelNameInputField.gameObject.SetActive(true);
+           // TestObject.SetActive(false);
+         //   hit.gameObject.SetActive(false);
             // reset the mute button state
-            if (isMuted)
+           /* if (isMuted)
             {
                 MuteButtonTapped();
-            }
+            }*/
         };
 
         /*mRtcEngine.OnUserJoined += (uint uid, int elapsed) =>
@@ -182,8 +182,7 @@ public class HelloUnity3D : MonoBehaviour
 
     public void JoinChannel()
     {
-        string channelName = mChannelNameInputField.text.Trim();
-
+        string channelName = SaveRoomString.roomname;
         Debug.Log(string.Format("tap joinChannel with channel name {0}", channelName));
 
         if (string.IsNullOrEmpty(channelName))
@@ -203,7 +202,8 @@ public class HelloUnity3D : MonoBehaviour
         // effect.StopAllEffects ();
 
         mRtcEngine.LeaveChannel();
-        string channelName = mChannelNameInputField.text.Trim();
+        //string channelName = mChannelNameInputField.text.Trim();
+        string channelName = SaveRoomString.roomname;
         Debug.Log(string.Format("left channel name {0}", channelName));
     }
 
@@ -237,13 +237,13 @@ public class HelloUnity3D : MonoBehaviour
     bool isMuted = false;
     void MuteButtonTapped()
     {
-        string labeltext = isMuted ? "Mute" : "Unmute";
-        Text label = muteButton.GetComponentInChildren<Text>();
-        if (label != null)
+      //  string labeltext = isMuted ? "Mute" : "Unmute";
+       // Text label = muteButton.GetComponentInChildren<Text>();
+       /* if (label != null)
         {
             label.text = labeltext;
-        }
-        isMuted = !isMuted;
-        mRtcEngine.EnableLocalAudio(!isMuted);
+        }*/
+       // isMuted = !isMuted;
+        //mRtcEngine.EnableLocalAudio(!isMuted);
     }
 }
