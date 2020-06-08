@@ -6,6 +6,7 @@ using Photon.Realtime;
 
 public class QuickStartLobbyController : MonoBehaviourPunCallbacks
 {
+    private int count = 0;
     [SerializeField]
     private GameObject quickStartButton;
     [SerializeField]
@@ -16,14 +17,26 @@ public class QuickStartLobbyController : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
         quickStartButton.SetActive(true);
     }
-
+    void Start(){
+        count =0;
+    }
+    void Update(){
+        if(PhotonNetwork.CurrentRoom.Name != null && count ==0){
+            JoinedRoom();
+            count++;
+        }
+    }
     public void QuickStart(){
         quickStartButton.SetActive(false);
         quickCancelButton.SetActive(true);
         PhotonNetwork.JoinRandomRoom();
         Debug.Log("Quick start");
     }
-
+    public void JoinedRoom(){
+        print("running");
+        SaveRoomString.roomname = PhotonNetwork.CurrentRoom.Name;
+        Debug.Log(PhotonNetwork.CurrentRoom.Name+ "joined");
+    }
     public override void OnJoinRandomFailed(short returnCode, string message){
         Debug.Log("Failed to join a room");
         CreateRoom();

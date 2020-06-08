@@ -15,11 +15,13 @@ public class GameSetupController : MonoBehaviour
     }
     private void CreatePlayer(){
         Debug.Log("Creating Player");
-        if(!PositionCheck.reserved){
+        var tempcount = PhotonNetwork.CurrentRoom.PlayerCount;
+        print(tempcount);
+        if(tempcount == 1){
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs","Dimples"),LOC1.transform.position,Quaternion.identity);
         PositionCheck.reserved = true;
         }
-        else{
+        if(tempcount ==2){
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs","Dimples"),LOC2.transform.position,Quaternion.identity);
         PositionCheck.reserved = true;
         }

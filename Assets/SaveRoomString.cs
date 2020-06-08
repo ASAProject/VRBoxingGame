@@ -9,4 +9,7 @@ public class SaveRoomString : MonoBehaviour
     void Start(){
         DontDestroyOnLoad(this.gameObject);
     }
+    private void Update(){
+        print(roomname);
+    }
 }
