@@ -7,34 +7,17 @@ using agora_gaming_rtc;
 
 public class HelloUnity3D : MonoBehaviour
 {
-    //public Text hit;
-    //public GameObject TestObject;
-    //public InputField mChannelNameInputField;
-    //public Text mShownMessage;
-    //public Text versionText;
-    //public Button joinChannel;
-    //public Button leaveChannel;
-   // public Button muteButton;
-
     private IRtcEngine mRtcEngine = null;
-
-    // PLEASE KEEP THIS App ID IN SAFE PLACE
-    // Get your own App ID at https://dashboard.agora.io/
-    // After you entered the App ID, remove ## outside of Your App ID
     [SerializeField]
     private string appId = "YOUR APP ID";
-
+    public Button mic,aud;
+    bool isMuted = false;
+    bool isAudiooff = false;
     void Awake()
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 30;
-        //muteButton.gameObject.SetActive(false);
-        //leaveChannel.gameObject.SetActive(false);
-        //TestObject.SetActive(false);
-        //        h//it.gameObject.SetActive(false);
     }
-
-    // Use this for initialization
     void Start()
     {
 #if (UNITY_2018_3_OR_NEWER)
@@ -47,134 +30,30 @@ public class HelloUnity3D : MonoBehaviour
 				Permission.RequestUserPermission(Permission.Microphone);
 			}
 #endif
-        //joinChannel.onClick.AddListener(JoinChannel);
-       // leaveChannel.onClick.AddListener(LeaveChannel);
        // muteButton.onClick.AddListener(MuteButtonTapped);
 
         mRtcEngine = IRtcEngine.GetEngine(appId);
-        //versionText.GetComponent<Text>().text = "Version : " + getSdkVersion();
         JoinChannel();
         mRtcEngine.OnJoinChannelSuccess += (string channelName, uint uid, int elapsed) =>
         {
-            
-          //  mShownMessage.text = "Entered Room";
            // muteButton.gameObject.SetActive(true);
-          //  leaveChannel.gameObject.SetActive(true);  
-           // joinChannel.gameObject.SetActive(false);
-           // mChannelNameInputField.gameObject.SetActive(false);
-           // TestObject.SetActive(true);
-            //hit.gameObject.SetActive(true);
         };
 
         mRtcEngine.OnLeaveChannel += (RtcStats stats) =>
         {
-            
-           // mShownMessage.text = "Leaved Room";
            // muteButton.gameObject.SetActive(false) ;
-           // leaveChannel.gameObject.SetActive(false);  
-           // joinChannel.gameObject.SetActive(true);
-           // mChannelNameInputField.gameObject.SetActive(true);
-           // TestObject.SetActive(false);
-         //   hit.gameObject.SetActive(false);
-            // reset the mute button state
            /* if (isMuted)
             {
                 MuteButtonTapped();
             }*/
         };
-
-        /*mRtcEngine.OnUserJoined += (uint uid, int elapsed) =>
-        {
-            string userJoinedMessage = string.Format("onUserJoined callback uid {0} {1}", uid, elapsed);
-            Debug.Log(userJoinedMessage);
-        };
-
-        mRtcEngine.OnUserOffline += (uint uid, USER_OFFLINE_REASON reason) =>
-        {
-            string userOfflineMessage = string.Format("onUserOffline callback uid {0} {1}", uid, reason);
-            Debug.Log(userOfflineMessage);
-        };
-
-        mRtcEngine.OnVolumeIndication += (AudioVolumeInfo[] speakers, int speakerNumber, int totalVolume) =>
-        {
-            if (speakerNumber == 0 || speakers == null)
-            {
-                Debug.Log(string.Format("onVolumeIndication only local {0}", totalVolume));
-            }
-
-            for (int idx = 0; idx < speakerNumber; idx++)
-            {
-                string volumeIndicationMessage = string.Format("{0} onVolumeIndication {1} {2}", speakerNumber, speakers[idx].uid, speakers[idx].volume);
-                Debug.Log(volumeIndicationMessage);
-            }
-        };
-
         mRtcEngine.OnUserMutedAudio += (uint uid, bool muted) =>
         {
             string userMutedMessage = string.Format("onUserMuted callback uid {0} {1}", uid, muted);
             Debug.Log(userMutedMessage);
         };
-
-        mRtcEngine.OnWarning += (int warn, string msg) =>
-        {
-            string description = IRtcEngine.GetErrorDescription(warn);
-            string warningMessage = string.Format("onWarning callback {0} {1} {2}", warn, msg, description);
-            Debug.Log(warningMessage);
-        };
-
-        mRtcEngine.OnError += (int error, string msg) =>
-        {
-            string description = IRtcEngine.GetErrorDescription(error);
-            string errorMessage = string.Format("onError callback {0} {1} {2}", error, msg, description);
-            Debug.Log(errorMessage);
-        };
-
-        mRtcEngine.OnRtcStats += (RtcStats stats) =>
-        {
-            string rtcStatsMessage = string.Format("onRtcStats callback duration {0}, tx: {1}, rx: {2}, tx kbps: {3}, rx kbps: {4}, tx(a) kbps: {5}, rx(a) kbps: {6} users {7}",
-                stats.duration, stats.txBytes, stats.rxBytes, stats.txKBitRate, stats.rxKBitRate, stats.txAudioKBitRate, stats.rxAudioKBitRate, stats.userCount);
-            Debug.Log(rtcStatsMessage);
-
-            int lengthOfMixingFile = mRtcEngine.GetAudioMixingDuration();
-            int currentTs = mRtcEngine.GetAudioMixingCurrentPosition();
-
-            string mixingMessage = string.Format("Mixing File Meta {0}, {1}", lengthOfMixingFile, currentTs);
-            Debug.Log(mixingMessage);
-        };
-
-        mRtcEngine.OnAudioRouteChanged += (AUDIO_ROUTE route) =>
-        {
-            string routeMessage = string.Format("onAudioRouteChanged {0}", route);
-            Debug.Log(routeMessage);
-        };
-
-        mRtcEngine.OnRequestToken += () =>
-        {
-            string requestKeyMessage = string.Format("OnRequestToken");
-            Debug.Log(requestKeyMessage);
-        };
-
-        mRtcEngine.OnConnectionInterrupted += () =>
-        {
-            string interruptedMessage = string.Format("OnConnectionInterrupted");
-            Debug.Log(interruptedMessage);
-        };
-
-        mRtcEngine.OnConnectionLost += () =>
-        {
-            string lostMessage = string.Format("OnConnectionLost");
-            Debug.Log(lostMessage);
-        };
-
-        mRtcEngine.SetLogFilter(LOG_FILTER.INFO);
-
-        mRtcEngine.SetChannelProfile(CHANNEL_PROFILE.CHANNEL_PROFILE_COMMUNICATION);
-
-        // mRtcEngine.SetChannelProfile (CHANNEL_PROFILE.CHANNEL_PROFILE_LIVE_BROADCASTING);
-        // mRtcEngine.SetClientRole (CLIENT_ROLE.BROADCASTER);*/
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -189,22 +68,13 @@ public class HelloUnity3D : MonoBehaviour
         {
             return;
         }
-
         mRtcEngine.JoinChannel(channelName, "extra", 0);
     }
 
     public void LeaveChannel()
     {
-        // int duration = mRtcEngine.GetAudioMixingDuration ();
-        // int current_duration = mRtcEngine.GetAudioMixingCurrentPosition ();
-
-        // IAudioEffectManager effect = mRtcEngine.GetAudioEffectManager();
-        // effect.StopAllEffects ();
-
         mRtcEngine.LeaveChannel();
-        //string channelName = mChannelNameInputField.text.Trim();
         string channelName = SaveRoomString.roomname;
-        Debug.Log(string.Format("left channel name {0}", channelName));
     }
 
     void OnApplicationQuit()
@@ -234,7 +104,7 @@ public class HelloUnity3D : MonoBehaviour
     }
 
 
-    bool isMuted = false;
+    
     void MuteButtonTapped()
     {
       //  string labeltext = isMuted ? "Mute" : "Unmute";
@@ -246,4 +116,20 @@ public class HelloUnity3D : MonoBehaviour
        // isMuted = !isMuted;
         //mRtcEngine.EnableLocalAudio(!isMuted);
     }
+    public void Mic(){
+        string buttontext = isMuted ? "MicMute" : "MicUnmute";
+        Text labeltext = mic.GetComponentInChildren<Text>();
+        labeltext.text = buttontext;
+        isMuted = !isMuted;
+        mRtcEngine.EnableLocalAudio(!isMuted);
+    }
+    public void Audio(){
+        string buttontext = isAudiooff ? "AudioMute" : "AudioUnmute";
+        Text labeltext = aud.GetComponentInChildren<Text>();
+        labeltext.text = buttontext;
+        isAudiooff = !isAudiooff;
+        mRtcEngine.MuteAllRemoteAudioStreams(isAudiooff);
+        
+    }
+    
 }
