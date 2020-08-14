@@ -946,6 +946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8158397362806964348}
+  - component: {fileID: 8697675842591363248}
   m_Layer: 0
   m_Name: DimplesRig:LeftHandIndex1
   m_TagString: Untagged
@@ -968,6 +969,19 @@ Transform:
   m_Father: {fileID: 8964318020851577151}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8697675842591363248
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7209588176827148496}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7588060033767577592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1389,6 +1403,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2485549060092207622}
+  - component: {fileID: 6257998867397960903}
   m_Layer: 0
   m_Name: DimplesRig:RightHandIndex1
   m_TagString: Untagged
@@ -1411,3 +1426,16 @@ Transform:
   m_Father: {fileID: 2725794940087977749}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &6257998867397960903
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9042730117290785071}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}

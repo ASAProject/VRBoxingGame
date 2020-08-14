@@ -72,6 +72,7 @@ namespace Photon.Pun.Demo.Asteroids
 
         public override void OnLeftLobby()
         {
+            print("123");
             cachedRoomList.Clear();
 
             ClearRoomListView();
@@ -129,9 +130,11 @@ namespace Photon.Pun.Demo.Asteroids
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
+        
 
         public override void OnLeftRoom()
         {
+            print("1234");
             SetActivePanel(SelectionPanel.name);
 
             foreach (GameObject entry in playerListEntries.Values)

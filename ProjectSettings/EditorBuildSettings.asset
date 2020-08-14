@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 1caf929b0ec15b141b1b64a0a3e2d4fd
   - enabled: 1
-    path: Assets/Scenes/Callforboxing 1.unity
+    path: Assets/Scenes/Callforboxing.unity
     guid: c8e3884d2d28cb74ea4550e5578f270c
+  - enabled: 1
+    path: Assets/Scenes/Retry.unity
+    guid: ff06d6f1534e5b0459758a69cee3d200
   m_configObjects: {}
